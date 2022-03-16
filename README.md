@@ -2,7 +2,7 @@
 
 Writeups available at: https://eval.hashnode.dev/series/ethernaut-ctf
 
-*Bare repository available at branch `00-hello-foundry`*
+*Bare repository available at branch `bare-template`*
 
 ## Info
 
