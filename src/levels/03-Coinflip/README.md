@@ -11,7 +11,7 @@ the function checks.
 
 **TelephoneAttack.sol**
 
-```
+```solidity
 interface ITelephone {
     function changeOwner(address _owner) external;
 }
@@ -29,7 +29,7 @@ contract TelephoneAttack {
 }
 ```
 
-```
+```solidity
 function testTelephoneHack() public {
     TelephoneAttack attackContract = new TelephoneAttack(levelAddress);
     emit log_named_address("tx.origin", tx.origin);
