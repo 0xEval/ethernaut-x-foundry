@@ -1,24 +1,24 @@
 # Objective
 
-- [] you claim ownership of the contract
-- [] you reduce its balance to 0
+- Claim ownership of the contract
+- Reduce its balance to 0
 
 Things that might help
 
-How to send ether when interacting with an ABI
-How to send ether outside of the ABI
-Converting to and from wei/ether units (see help() command)
-Fallback methods
+- How to send ether when interacting with an ABI
+- How to send ether outside of the ABI
+- Converting to and from wei/ether units (see help() command)
+- Fallback methods
 
 Initially the contract's owner will be whoever deploys a `Fallback` instance:
-```
+```solidity
 constructor() {
     owner = payable(msg.sender); // <-- this line over here
     contributions[msg.sender] = 1000 * (1 ether);
 }
 ```
 It is **possible** to change ownership once the contract has been deployed by calling the `contribute()` function:
-```
+```solidity
 function contribute() public payable {
     require(msg.value < 0.001 ether);
     contributions[msg.sender] += msg.value;
@@ -29,7 +29,7 @@ function contribute() public payable {
 ```
 
 Judging by the following snippet: 
-```sol
+```solidity
 if (contributions[msg.sender] > contributions[owner]) {
   owner = msg.sender;
 }
