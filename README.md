@@ -1,6 +1,6 @@
 ## OpenZeppelin Ethernaut CTF solved & tested with Foundry
 
-Writeups available at: https://eval.hashnode.dev/series/ethernaut-ctf
+Writeups available at: https://blog.0xeval.me/series/ethernaut-ctf
 
 *Bare repository available at branch `bare-template`*
 
