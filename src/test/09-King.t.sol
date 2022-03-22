@@ -31,9 +31,7 @@ contract KingTest is DSTest {
         ethernaut.registerLevel(kingFactory);
         vm.startPrank(attacker);
 
-        address levelAddress = ethernaut.createLevelInstance{
-            value: 0.001 ether
-        }(kingFactory);
+        address levelAddress = ethernaut.createLevelInstance{value: 0.001 ether}(kingFactory);
         King kingContract = King(payable(levelAddress));
 
         //--------------------------------------------------------------------------------
@@ -50,9 +48,7 @@ contract KingTest is DSTest {
         //--------------------------------------------------------------------------------
         //                                Submit Level
         //--------------------------------------------------------------------------------
-        bool challengeCompleted = ethernaut.submitLevelInstance(
-            payable(levelAddress)
-        );
+        bool challengeCompleted = ethernaut.submitLevelInstance(payable(levelAddress));
         vm.stopPrank();
         assert(challengeCompleted);
     }

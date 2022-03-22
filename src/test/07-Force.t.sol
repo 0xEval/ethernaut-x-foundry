@@ -44,9 +44,7 @@ contract ForceTest is DSTest {
         //--------------------------------------------------------------------------------
         //                                Submit Level
         //--------------------------------------------------------------------------------
-        bool challengeCompleted = ethernaut.submitLevelInstance(
-            payable(levelAddress)
-        );
+        bool challengeCompleted = ethernaut.submitLevelInstance(payable(levelAddress));
         vm.stopPrank();
         assert(challengeCompleted);
     }

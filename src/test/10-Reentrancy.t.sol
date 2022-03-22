@@ -30,9 +30,7 @@ contract ReentranceTest is DSTest {
         ReentranceFactory reentranceFactory = new ReentranceFactory();
         ethernaut.registerLevel(reentranceFactory);
         vm.startPrank(attacker);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(
-            reentranceFactory
-        );
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(reentranceFactory);
         Reentrance reentranceContract = Reentrance(payable(levelAddress));
 
         //--------------------------------------------------------------------------------
@@ -47,9 +45,7 @@ contract ReentranceTest is DSTest {
         //--------------------------------------------------------------------------------
         //                                Submit Level
         //--------------------------------------------------------------------------------
-        bool challengeCompleted = ethernaut.submitLevelInstance(
-            payable(levelAddress)
-        );
+        bool challengeCompleted = ethernaut.submitLevelInstance(payable(levelAddress));
         vm.stopPrank();
         assert(challengeCompleted);
     }

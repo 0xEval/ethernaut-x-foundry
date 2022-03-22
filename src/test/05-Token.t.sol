@@ -36,23 +36,15 @@ contract TokenTest is DSTest {
         //                             Start Level Attack
         //--------------------------------------------------------------------------------
         tokenContract.transfer(address(0x1), 20);
-        emit log_named_uint(
-            "playerContract balance",
-            tokenContract.balanceOf(address(attacker))
-        );
+        emit log_named_uint("playerContract balance", tokenContract.balanceOf(address(attacker)));
         tokenContract.transfer(address(0x1), 1);
-        emit log_named_uint(
-            "playerContract balance",
-            tokenContract.balanceOf(address(attacker))
-        );
+        emit log_named_uint("playerContract balance", tokenContract.balanceOf(address(attacker)));
         assertEq(tokenContract.balanceOf(address(attacker)), type(uint256).max);
 
         //--------------------------------------------------------------------------------
         //                                Submit Level
         //--------------------------------------------------------------------------------
-        bool challengeCompleted = ethernaut.submitLevelInstance(
-            payable(levelAddress)
-        );
+        bool challengeCompleted = ethernaut.submitLevelInstance(payable(levelAddress));
         vm.stopPrank();
         assert(challengeCompleted);
     }

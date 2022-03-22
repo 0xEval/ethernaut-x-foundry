@@ -5,22 +5,12 @@ import "../../core/BaseLevel.sol";
 import "./Coinflip.sol";
 
 contract CoinflipFactory is Level {
-    function createInstance(address _player)
-        public
-        payable
-        override
-        returns (address)
-    {
+    function createInstance(address _player) public payable override returns (address) {
         _player;
         return address(new Coinflip());
     }
 
-    function validateInstance(address payable _instance, address)
-        public
-        view
-        override
-        returns (bool)
-    {
+    function validateInstance(address payable _instance, address) public view override returns (bool) {
         Coinflip instance = Coinflip(_instance);
         return instance.consecutiveWins() >= 10;
     }
