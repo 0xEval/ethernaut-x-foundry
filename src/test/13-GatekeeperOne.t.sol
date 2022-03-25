@@ -78,19 +78,19 @@ contract GatekeeperOneTest is DSTest {
         // ---------------------------------------------------------
         // Same as the first condition but we use _gateKey = tx.origin
 
-        emit log_named_address('tx.origin', tx.origin);
-        emit log_named_uint('uint160(tx.origin)', uint160(tx.origin));
-        emit log_named_uint('uint16(uint160(tx.origin))', uint16(uint160(tx.origin)));
-        emit log_named_uint('uint32(uint64(tx.origin))', uint32(uint64(tx.origin)));
-
         bytes8 key = bytes8(uint64(uint160(tx.origin))) & 0xFFFFFFFF0000FFFF;
+
+        emit log_named_uint('Gate 3 - Condition 1/2/3', uint16(uint64(key)));
+        emit log_named_uint('Gate 3 - Condition 1', uint16(uint64(key)));
+        emit log_named_uint('Gate 3 - Condition 2', uint64(key));
+        emit log_named_uint('Gate 3 - Condition 3', uint16(uint160(tx.origin)));
 
         // Loop through a until correct gas is found, use try catch to get around the revert
         for (uint256 i = 0; i <= 8191; i++) {
             // 73985 is preset close to the result for readability when testing
             // in practice we can take a wider margin
             try gatekeeperOneAttack.attack(key, 73985 + i) {
-                emit log_named_uint('Pass - Gas', 73985 + i);
+                emit log_named_uint('Gate 2 OK - Gas', 73985 + i);
                 break;
             } catch {}
         }
