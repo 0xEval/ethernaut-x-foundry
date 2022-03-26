@@ -9,44 +9,48 @@ import '../levels/11-Elevator/ElevatorAttack.sol';
 import '../core/Ethernaut.sol';
 
 contract ElevatorTest is DSTest {
+  //--------------------------------------------------------------------------------
+  //                            Setup Game Instance
+  //--------------------------------------------------------------------------------
+
+  Vm vm = Vm(address(HEVM_ADDRESS)); // `ds-test` library cheatcodes for testing
+  Ethernaut ethernaut;
+  address attacker = address(0xdeadbeef);
+
+  function setUp() public {
+    ethernaut = new Ethernaut(); // initiate Ethernaut contract instance
+    vm.deal(attacker, 100 ether); // fund our attacker contract with 1 ether
+  }
+
+  function testElevatorHack() public {
     //--------------------------------------------------------------------------------
-    //                            Setup Game Instance
+    //                             Setup Level Instance
     //--------------------------------------------------------------------------------
 
-    Vm vm = Vm(address(HEVM_ADDRESS)); // `ds-test` library cheatcodes for testing
-    Ethernaut ethernaut;
-    address attacker = address(0xdeadbeef);
+    ElevatorFactory elevatorFactory = new ElevatorFactory();
+    ethernaut.registerLevel(elevatorFactory);
+    vm.startPrank(attacker);
+    address levelAddress = ethernaut.createLevelInstance{ value: 1 ether }(
+      elevatorFactory
+    );
+    Elevator elevatorContract = Elevator(payable(levelAddress));
 
-    function setUp() public {
-        ethernaut = new Ethernaut(); // initiate Ethernaut contract instance
-        vm.deal(attacker, 100 ether); // fund our attacker contract with 1 ether
-    }
+    //--------------------------------------------------------------------------------
+    //                             Start Level Attack
+    //--------------------------------------------------------------------------------
 
-    function testElevatorHack() public {
-        //--------------------------------------------------------------------------------
-        //                             Setup Level Instance
-        //--------------------------------------------------------------------------------
+    // Create ElevatorHack contract
+    ElevatorAttack elevatorAttack = new ElevatorAttack(levelAddress);
+    // Call the attack function to reach the top floor
+    elevatorAttack.attack();
 
-        ElevatorFactory elevatorFactory = new ElevatorFactory();
-        ethernaut.registerLevel(elevatorFactory);
-        vm.startPrank(attacker);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(elevatorFactory);
-        Elevator elevatorContract = Elevator(payable(levelAddress));
-
-        //--------------------------------------------------------------------------------
-        //                             Start Level Attack
-        //--------------------------------------------------------------------------------
-
-        // Create ElevatorHack contract
-        ElevatorAttack elevatorAttack = new ElevatorAttack(levelAddress);
-        // Call the attack function to reach the top floor
-        elevatorAttack.attack();
-
-        //--------------------------------------------------------------------------------
-        //                                Submit Level
-        //--------------------------------------------------------------------------------
-        bool challengeCompleted = ethernaut.submitLevelInstance(payable(levelAddress));
-        vm.stopPrank();
-        assert(challengeCompleted);
-    }
+    //--------------------------------------------------------------------------------
+    //                                Submit Level
+    //--------------------------------------------------------------------------------
+    bool challengeCompleted = ethernaut.submitLevelInstance(
+      payable(levelAddress)
+    );
+    vm.stopPrank();
+    assert(challengeCompleted);
+  }
 }

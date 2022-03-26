@@ -4,15 +4,15 @@ pragma solidity ^0.8.10;
 // Claim ownership of the contract below to complete this level.
 
 contract Telephone {
-    address public owner;
+  address public owner;
 
-    constructor() {
-        owner = msg.sender;
-    }
+  constructor() {
+    owner = msg.sender;
+  }
 
-    function changeOwner(address _owner) public {
-        if (tx.origin != msg.sender) {
-            owner = _owner;
-        }
+  function changeOwner(address _owner) public {
+    if (tx.origin != msg.sender) {
+      owner = _owner;
     }
+  }
 }

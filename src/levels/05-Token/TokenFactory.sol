@@ -2,21 +2,31 @@
 
 pragma solidity ^0.8.10;
 
-import "../../core/BaseLevel.sol";
-import "./Token.sol";
+import '../../core/BaseLevel.sol';
+import './Token.sol';
 
 contract TokenFactory is Level {
-    uint256 supply = 21000000;
-    uint256 playerSupply = 20;
+  uint256 supply = 21000000;
+  uint256 playerSupply = 20;
 
-    function createInstance(address _player) public payable override returns (address) {
-        Token token = new Token(supply);
-        token.transfer(_player, playerSupply);
-        return address(token);
-    }
+  function createInstance(address _player)
+    public
+    payable
+    override
+    returns (address)
+  {
+    Token token = new Token(supply);
+    token.transfer(_player, playerSupply);
+    return address(token);
+  }
 
-    function validateInstance(address payable _instance, address _player) public view override returns (bool) {
-        Token token = Token(_instance);
-        return token.balanceOf(_player) > playerSupply;
-    }
+  function validateInstance(address payable _instance, address _player)
+    public
+    view
+    override
+    returns (bool)
+  {
+    Token token = Token(_instance);
+    return token.balanceOf(_player) > playerSupply;
+  }
 }

