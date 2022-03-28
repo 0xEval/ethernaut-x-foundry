@@ -13,7 +13,7 @@ pragma solidity ^0.8.10;
 
 contract Privacy {
   bool public locked = true;
-  uint256 public ID = block.timestamp;
+  uint256 public constantID = block.timestamp;
   uint8 private flattening = 10;
   uint8 private denomination = 255;
   uint16 private awkwardness = uint16(block.timestamp); // now has been deprecated
