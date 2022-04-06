@@ -6,4 +6,4 @@ The DEX contract relies on a centralized price oracle based on its own reserves.
 
 *Ref: https://blog.chain.link/defi-security-best-practices/*
 
-![https://user-images.githubusercontent.com/19994887/161902944-7f06e721-08fe-4e55-a005-620a3e31be0f.png]
+![](https://user-images.githubusercontent.com/19994887/161902944-7f06e721-08fe-4e55-a005-620a3e31be0f.png)
